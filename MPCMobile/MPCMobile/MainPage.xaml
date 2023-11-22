@@ -1,0 +1,212 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MPCMobile.MainPage"
+             xmlns:jio="clr-namespace:Jara.Xaml.Control.Extension;assembly=Jara.Xaml.ControlExtensions.Xamarin"
+             xmlns:vm="clr-namespace:MPCMobile.ViewModels"
+             Visual="Material"
+             Shell.NavBarIsVisible="True"
+             Shell.NavBarHasShadow="True"
+             Title="New Diary"
+             x:Name="this">
+
+    <ContentPage.BindingContext>
+        <vm:MainViewModel />
+    </ContentPage.BindingContext>
+
+    <Grid BackgroundColor="#FFF1F5F7"
+          IsEnabled="{Binding IsBusy, Converter={StaticResource ToReverseBoolean}}">
+        <!--header-->
+
+        <!--content-->
+        <ScrollView>
+            <StackLayout>
+                <!--location-->
+                <Grid BackgroundColor="White"
+                      HeightRequest="48">
+                    <StackLayout Orientation="Horizontal"
+                                 VerticalOptions="Center"
+                                 Margin="20,10">
+                        <Label Text="&#xf034e;"
+                               FontFamily="MaterialIcons"
+                               FontSize="20"
+                               TextColor="Gray" />
+                        <Label Text="{Binding Location, FallbackValue='Location not found'}"
+                               VerticalOptions="Center"
+                               TextColor="#FF686868" />
+                    </StackLayout>
+                </Grid>
+
+                <StackLayout Padding="20">
+                    <StackLayout.Resources>
+                        <Style TargetType="Frame">
+                            <Setter Property="Margin"
+                                    Value="0,20,0,0" />
+                        </Style>
+                    </StackLayout.Resources>
+
+                    <!--title-->
+                    <Grid jio:GridEx.ColumnDefinitions="* ~">
+                        <Label Text="Add to site directory"
+                               FontSize="20"
+                               TextColor="Black"
+                               Grid.Column="0" />
+
+                        <Grid Grid.Column="1">
+                            <Label Text="&#xf012f;"
+                                   FontFamily="MaterialIcons"
+                                   FontSize="25"
+                                   TextColor="Gray" />
+                            <Label Text="?"
+                                   FontSize="15"
+                                   TextColor="White"
+                                   VerticalOptions="Center"
+                                   HorizontalOptions="Center" />
+                        </Grid>
+                    </Grid>
+
+                    <!--add photos-->
+                    <Frame>
+                        <StackLayout>
+                            <Label Text="Add photos to site diary"
+                                   Style="{StaticResource SectionTitleStyle}" />
+
+                            <Grid Style="{StaticResource HSpacer}" />
+
+                            <ScrollView Orientation="Horizontal">
+                                <StackLayout Orientation="Horizontal"
+                                             BindableLayout.ItemsSource="{Binding Images}">
+                                    <BindableLayout.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid HeightRequest="80"
+                                                  WidthRequest="80">
+                                                <Grid BackgroundColor="{StaticResource DefaultThemeAccent}"
+                                                      Margin="0,15,15,0">
+                                                    <Image Source="{Binding ImagePath}"
+                                                           Aspect="AspectFill" />
+                                                </Grid>
+
+                                                <Grid HorizontalOptions="End"
+                                                      VerticalOptions="Start">
+                                                    <Label Text="&#xf0765;"
+                                                           FontSize="30"
+                                                           FontFamily="MaterialIcons"
+                                                           TextColor="White" />
+
+                                                    <Label Text="&#xf0159;"
+                                                           FontSize="30"
+                                                           FontFamily="MaterialIcons"
+                                                           TextColor="Black">
+                                                        <Label.GestureRecognizers>
+                                                            <TapGestureRecognizer Command="{Binding BindingContext.RemovePhotoCommand, Source={x:Reference this}}"
+                                                                                  CommandParameter="{Binding }" />
+                                                        </Label.GestureRecognizers>
+                                                    </Label>
+                                                </Grid>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </BindableLayout.ItemTemplate>
+                                </StackLayout>
+                            </ScrollView>
+
+                            <Button Text="Add a photo"
+                                    Margin="0,10"
+                                    Command="{Binding AddPhotoCommend}" />
+
+                            <Grid Margin="0,10,0,0">
+                                <Label Text="Include in photo gallery" />
+
+                                <CheckBox HorizontalOptions="End"
+                                          HeightRequest="25"
+                                          WidthRequest="25" />
+                            </Grid>
+                        </StackLayout>
+                    </Frame>
+
+                    <!--comments-->
+                    <Frame>
+                        <StackLayout>
+                            <Label Text="Comments"
+                                   Style="{StaticResource SectionTitleStyle}" />
+
+                            <Grid Style="{StaticResource HSpacer}" />
+
+                            <Entry Placeholder="Comments"
+                                   FontSize="13"
+                                   PlaceholderColor="{StaticResource SectionTitleColor}"
+                                   Text="{Binding Comments}" />
+                        </StackLayout>
+                    </Frame>
+
+                    <!--details-->
+                    <Frame>
+                        <StackLayout>
+                            <Label Text="Details"
+                                   Style="{StaticResource SectionTitleStyle}" />
+
+                            <Grid Style="{StaticResource HSpacer}" />
+
+                            <DatePicker FontSize="13"
+                                        Date="{Binding DiaryDate}" />
+
+                            <Picker Title="Select Area"
+                                    ItemsSource="{Binding Areas}"
+                                    ItemDisplayBinding="{Binding AreaName}"
+                                    FontSize="13"
+                                    SelectedItem="{Binding SelectedArea}" />
+                            <Picker Title="Task Category"
+                                    ItemsSource="{Binding Categories}"
+                                    ItemDisplayBinding="{Binding CategoryName}"
+                                    FontSize="13"
+                                    SelectedItem="{Binding SelectedCategory}" />
+                            <Entry Placeholder="Tags"
+                                   FontSize="13"
+                                   PlaceholderColor="{StaticResource SectionTitleColor}"
+                                   Text="{Binding Tags}" />
+                            <Label Text="Tags can be separated by comma"
+                                   FontSize="11"
+                                   FontAttributes="Italic" />
+                        </StackLayout>
+                    </Frame>
+
+                    <!--link to existing event-->
+                    <Frame>
+                        <StackLayout>
+                            <Grid VerticalOptions="Center">
+                                <Label Text="Link to existing event?"
+                                       Style="{StaticResource SectionTitleStyle}" />
+
+                                <CheckBox x:Name="cbLinkEvent"
+                                          HorizontalOptions="End"
+                                          HeightRequest="25"
+                                          WidthRequest="25"
+                                          IsChecked="{Binding LinkExistingEvent}" />
+                            </Grid>
+
+                            <Grid Style="{StaticResource HSpacer}" />
+
+                            <Picker Title="Select an event"
+                                    IsEnabled="{Binding IsChecked, Source={x:Reference cbLinkEvent}}"
+                                    FontSize="13"
+                                    ItemsSource="{Binding Events}"
+                                    ItemDisplayBinding="{Binding EventName}"
+                                    SelectedItem="{Binding SelectedEvent}" />
+                        </StackLayout>
+                    </Frame>
+
+                    <Button Text="Next"
+                            Margin="0,20,0,0"
+                            Command="{Binding NextCommand}" />
+                </StackLayout>
+            </StackLayout>
+        </ScrollView>
+
+        <ActivityIndicator IsRunning="{Binding IsBusy}"
+                           WidthRequest="50"
+                           HeightRequest="50"
+                           VerticalOptions="Center"
+                           HorizontalOptions="Center"
+                           BackgroundColor="Transparent"
+                           Color="{StaticResource DefaultThemeAccent}" />
+    </Grid>
+</ContentPage>

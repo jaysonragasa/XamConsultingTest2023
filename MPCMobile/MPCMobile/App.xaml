@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Application xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:conv="clr-namespace:MPCMobile.Converters"
+             x:Class="MPCMobile.App">
+    
+    <Application.Resources>
+        <!--#region converters-->
+        <conv:ToReverseBooleanConverter x:Key="ToReverseBoolean" />
+        <!--#endregion converters-->
+
+        <!--#region reset-->
+        <Style TargetType="Frame">
+            <Setter Property="Padding"
+                    Value="15" />
+            <Setter Property="HasShadow"
+                    Value="True" />
+        </Style>
+
+        <Style TargetType="Grid">
+            <Setter Property="ColumnSpacing"
+                    Value="0" />
+            <Setter Property="RowSpacing"
+                    Value="0" />
+        </Style>
+        <!--#endregion reset-->
+
+        <!--#region default colors-->
+        <Color x:Key="DefaultThemeAccent">#FF97D600</Color>
+        <Color x:Key="PlaceholderTitleColor">#FF000000</Color>
+        <Color x:Key="SectionTitleColor">#FF7E7E7E</Color>
+        <!--#endregion default colors-->
+
+        <!--#region default styles-->
+        <Style x:Key="HSpacer"
+               TargetType="Grid">
+            <Setter Property="HeightRequest"
+                    Value="1" />
+            <Setter Property="BackgroundColor"
+                    Value="#1f000000" />
+            <Setter Property="HorizontalOptions"
+                    Value="FillAndExpand" />
+            <Setter Property="Margin"
+                    Value="0,10,0,3" />
+        </Style>
+        <Style x:Key="Title"
+               TargetType="Label">
+            <Setter Property="FontSize"
+                    Value="20" />
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="BackgroundColor"
+                    Value="{StaticResource DefaultThemeAccent}" />
+            <Setter Property="HeightRequest"
+                    Value="60" />
+        </Style>
+        <Style TargetType="CheckBox">
+            <Setter Property="Color"
+                    Value="{StaticResource DefaultThemeAccent}" />
+            <Setter Property="VerticalOptions"
+                    Value="Center" />
+        </Style>
+        <Style TargetType="Label">
+            <Setter Property="VerticalOptions"
+                    Value="Center" />
+            <Setter Property="TextColor"
+                    Value="Black" />
+        </Style>
+        <Style TargetType="Entry">
+            <Setter Property="BackgroundColor"
+                    Value="White" />
+            <Setter Property="PlaceholderColor"
+                    Value="{StaticResource PlaceholderTitleColor}" />
+        </Style>
+        <Style TargetType="Picker">
+            <Setter Property="BackgroundColor"
+                    Value="Transparent" />
+            <Setter Property="TitleColor"
+                    Value="{StaticResource PlaceholderTitleColor}" />
+        </Style>
+        <Style TargetType="DatePicker">
+            <Setter Property="BackgroundColor"
+                    Value="Transparent" />
+        </Style>
+        <Style TargetType="Label"
+               x:Key="SectionTitleStyle">
+            <Setter Property="TextColor"
+                    Value="{StaticResource SectionTitleColor}" />
+            <Setter Property="FontAttributes"
+                    Value="Bold" />
+        </Style>
+        <!--#endregion default styles-->
+    </Application.Resources>
+</Application>
